@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch --env-file .env src/server.ts"
   },
   "author": "André Trevizam",
   "license": "ISC",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.15.9",
+    "prisma": "^6.7.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }
