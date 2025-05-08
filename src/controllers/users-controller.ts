@@ -38,6 +38,10 @@ class UsersController {
   async index(req: Request, res: Response) {
     const users = await prisma.user.findMany()
 
+    if (!users) {
+      throw new AppError("No users found!")
+    }
+
     return res.json(users)
   }
 }

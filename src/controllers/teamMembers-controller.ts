@@ -30,20 +30,20 @@ class TeamMembersController {
 
     const { user_id, team_id } = paramsSchema.parse(req.params)
 
-    const teamMember1 = await prisma.teamMember.findFirst({
+    const teamMember = await prisma.teamMember.findFirst({
       where: {
         userId: user_id,
         teamId: team_id
       }
     })
 
-    if (!teamMember1) {
+    if (!teamMember) {
       throw new AppError("Team member doens't exist!")
     }
 
     await prisma.teamMember.delete({
       where: {
-        id: teamMember1.id
+        id: teamMember.id
       }
     })
 
@@ -52,6 +52,10 @@ class TeamMembersController {
 
   async index(req: Request, res: Response) {
     const teamMembers = await prisma.teamMember.findMany()
+
+    if (!teamMembers) {
+      throw new AppError("No users found!")
+    }
 
     return res.json(teamMembers)
   }

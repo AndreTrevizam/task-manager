@@ -32,6 +32,10 @@ class TeamsController {
       }
     })
 
+    if (!teams) {
+      throw new AppError("No teams found!")
+    }
+
     return res.status(200).json(teams)
   }
 
