@@ -24,7 +24,13 @@ class TeamsController {
   }
 
   async index(req: Request, res: Response) {
-    const teams = await prisma.team.findMany()
+    const teams = await prisma.team.findMany({
+      include: {
+        teamMembers: {
+          select: { id: true }
+        }
+      }
+    })
 
     return res.status(200).json(teams)
   }
@@ -59,7 +65,7 @@ class TeamsController {
     const paramsSchema = z.object({
       id: z.string().uuid()
     })
-    
+
     const { id } = paramsSchema.parse(req.params)
 
     await prisma.team.delete({
