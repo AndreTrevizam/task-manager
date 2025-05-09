@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "@/database/prisma";
 import { z } from "zod"
+import { AppError } from "@/utils/AppError";
 
 class TasksStatusController {
   async update(req: Request, res: Response) {
@@ -14,6 +15,20 @@ class TasksStatusController {
 
     const { id } = paramsSchema.parse(req.params)
     const { status } = bodySchema.parse(req.body)
+
+    const task = await prisma.task.findUnique({
+      where: { id }
+    })
+
+    if (!task) {
+      throw new AppError("Task not found", 404)
+    }
+
+    const userId = req.user?.id
+
+    if (task?.assignedTo !== userId) {
+      throw new AppError("You can only modify your own task")
+    }
 
     await prisma.task.update({
       data: {
