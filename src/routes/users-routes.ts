@@ -7,6 +7,11 @@ const usersRoutes = Router()
 const usersController = new UsersController()
 
 usersRoutes.post("/", usersController.create)
-usersRoutes.use(ensureAuthenticated, verifyUserAuthorization(['admin'])).get("/", usersController.index)
+
+usersRoutes.get("/",
+  ensureAuthenticated,
+  verifyUserAuthorization(['admin']),
+  usersController.index
+)
 
 export { usersRoutes }
