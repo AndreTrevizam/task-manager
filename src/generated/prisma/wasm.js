@@ -158,6 +158,15 @@ exports.Prisma.TaskScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.TaskHistoryScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  changedBy: 'changedBy',
+  oldStatus: 'oldStatus',
+  newStatus: 'newStatus',
+  changedAt: 'changedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -193,7 +202,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Team: 'Team',
   TeamMember: 'TeamMember',
-  Task: 'Task'
+  Task: 'Task',
+  TaskHistory: 'TaskHistory'
 };
 
 /**

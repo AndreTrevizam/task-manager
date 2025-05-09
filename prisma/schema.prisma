@@ -38,6 +38,7 @@ model User {
 
   teamMembers TeamMember[]
   tasks Task[]
+  history TaskHistory[]
 
   @@map("users")
 }
@@ -86,5 +87,24 @@ model Task {
   user User @relation(fields: [assignedTo], references: [id])
   team Team @relation(fields: [teamId], references: [id])
 
+  history TaskHistory[]
+
   @@map("tasks")
+}
+
+model TaskHistory {
+  id String @id @default(uuid())
+
+  taskId String @map("task_id")
+  changedBy String @map("changed_by")
+  
+  oldStatus TaskStatus @map("old_status")
+  newStatus TaskStatus @map("new_status")
+
+  changedAt DateTime @default(now())
+
+  task Task @relation(fields: [taskId], references: [id])
+  user User @relation(fields: [changedBy], references: [id])
+
+  @@map("task_history")
 }

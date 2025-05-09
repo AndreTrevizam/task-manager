@@ -33,6 +33,11 @@ export type TeamMember = $Result.DefaultSelection<Prisma.$TeamMemberPayload>
  * 
  */
 export type Task = $Result.DefaultSelection<Prisma.$TaskPayload>
+/**
+ * Model TaskHistory
+ * 
+ */
+export type TaskHistory = $Result.DefaultSelection<Prisma.$TaskHistoryPayload>
 
 /**
  * Enums
@@ -241,6 +246,16 @@ export class PrismaClient<
     * ```
     */
   get task(): Prisma.TaskDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.taskHistory`: Exposes CRUD operations for the **TaskHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TaskHistories
+    * const taskHistories = await prisma.taskHistory.findMany()
+    * ```
+    */
+  get taskHistory(): Prisma.TaskHistoryDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -684,7 +699,8 @@ export namespace Prisma {
     User: 'User',
     Team: 'Team',
     TeamMember: 'TeamMember',
-    Task: 'Task'
+    Task: 'Task',
+    TaskHistory: 'TaskHistory'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -703,7 +719,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "team" | "teamMember" | "task"
+      modelProps: "user" | "team" | "teamMember" | "task" | "taskHistory"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1003,6 +1019,80 @@ export namespace Prisma {
           }
         }
       }
+      TaskHistory: {
+        payload: Prisma.$TaskHistoryPayload<ExtArgs>
+        fields: Prisma.TaskHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TaskHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TaskHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.TaskHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TaskHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.TaskHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.TaskHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.TaskHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TaskHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.TaskHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload>
+          }
+          update: {
+            args: Prisma.TaskHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.TaskHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TaskHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TaskHistoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.TaskHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TaskHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.TaskHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTaskHistory>
+          }
+          groupBy: {
+            args: Prisma.TaskHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TaskHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TaskHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<TaskHistoryCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1091,6 +1181,7 @@ export namespace Prisma {
     team?: TeamOmit
     teamMember?: TeamMemberOmit
     task?: TaskOmit
+    taskHistory?: TaskHistoryOmit
   }
 
   /* Types for Logging */
@@ -1187,11 +1278,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     teamMembers: number
     tasks: number
+    history: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     teamMembers?: boolean | UserCountOutputTypeCountTeamMembersArgs
     tasks?: boolean | UserCountOutputTypeCountTasksArgs
+    history?: boolean | UserCountOutputTypeCountHistoryArgs
   }
 
   // Custom InputTypes
@@ -1217,6 +1310,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TaskWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskHistoryWhereInput
   }
 
 
@@ -1257,6 +1357,37 @@ export namespace Prisma {
    */
   export type TeamCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TaskWhereInput
+  }
+
+
+  /**
+   * Count Type TaskCountOutputType
+   */
+
+  export type TaskCountOutputType = {
+    history: number
+  }
+
+  export type TaskCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    history?: boolean | TaskCountOutputTypeCountHistoryArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TaskCountOutputType without action
+   */
+  export type TaskCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskCountOutputType
+     */
+    select?: TaskCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TaskCountOutputType without action
+   */
+  export type TaskCountOutputTypeCountHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskHistoryWhereInput
   }
 
 
@@ -1446,6 +1577,7 @@ export namespace Prisma {
     updatedAt?: boolean
     teamMembers?: boolean | User$teamMembersArgs<ExtArgs>
     tasks?: boolean | User$tasksArgs<ExtArgs>
+    history?: boolean | User$historyArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1483,6 +1615,7 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     teamMembers?: boolean | User$teamMembersArgs<ExtArgs>
     tasks?: boolean | User$tasksArgs<ExtArgs>
+    history?: boolean | User$historyArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1493,6 +1626,7 @@ export namespace Prisma {
     objects: {
       teamMembers: Prisma.$TeamMemberPayload<ExtArgs>[]
       tasks: Prisma.$TaskPayload<ExtArgs>[]
+      history: Prisma.$TaskHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1898,6 +2032,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     teamMembers<T extends User$teamMembersArgs<ExtArgs> = {}>(args?: Subset<T, User$teamMembersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    history<T extends User$historyArgs<ExtArgs> = {}>(args?: Subset<T, User$historyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2367,6 +2502,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
+   * User.history
+   */
+  export type User$historyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    where?: TaskHistoryWhereInput
+    orderBy?: TaskHistoryOrderByWithRelationInput | TaskHistoryOrderByWithRelationInput[]
+    cursor?: TaskHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskHistoryScalarFieldEnum | TaskHistoryScalarFieldEnum[]
   }
 
   /**
@@ -4750,6 +4909,8 @@ export namespace Prisma {
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    history?: boolean | Task$historyArgs<ExtArgs>
+    _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4796,6 +4957,8 @@ export namespace Prisma {
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    history?: boolean | Task$historyArgs<ExtArgs>
+    _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -4811,6 +4974,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       team: Prisma.$TeamPayload<ExtArgs>
+      history: Prisma.$TaskHistoryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5218,6 +5382,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    history<T extends Task$historyArgs<ExtArgs> = {}>(args?: Subset<T, Task$historyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5652,6 +5817,30 @@ export namespace Prisma {
   }
 
   /**
+   * Task.history
+   */
+  export type Task$historyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    where?: TaskHistoryWhereInput
+    orderBy?: TaskHistoryOrderByWithRelationInput | TaskHistoryOrderByWithRelationInput[]
+    cursor?: TaskHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskHistoryScalarFieldEnum | TaskHistoryScalarFieldEnum[]
+  }
+
+  /**
    * Task without action
    */
   export type TaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5667,6 +5856,1085 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TaskInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TaskHistory
+   */
+
+  export type AggregateTaskHistory = {
+    _count: TaskHistoryCountAggregateOutputType | null
+    _min: TaskHistoryMinAggregateOutputType | null
+    _max: TaskHistoryMaxAggregateOutputType | null
+  }
+
+  export type TaskHistoryMinAggregateOutputType = {
+    id: string | null
+    taskId: string | null
+    changedBy: string | null
+    oldStatus: $Enums.TaskStatus | null
+    newStatus: $Enums.TaskStatus | null
+    changedAt: Date | null
+  }
+
+  export type TaskHistoryMaxAggregateOutputType = {
+    id: string | null
+    taskId: string | null
+    changedBy: string | null
+    oldStatus: $Enums.TaskStatus | null
+    newStatus: $Enums.TaskStatus | null
+    changedAt: Date | null
+  }
+
+  export type TaskHistoryCountAggregateOutputType = {
+    id: number
+    taskId: number
+    changedBy: number
+    oldStatus: number
+    newStatus: number
+    changedAt: number
+    _all: number
+  }
+
+
+  export type TaskHistoryMinAggregateInputType = {
+    id?: true
+    taskId?: true
+    changedBy?: true
+    oldStatus?: true
+    newStatus?: true
+    changedAt?: true
+  }
+
+  export type TaskHistoryMaxAggregateInputType = {
+    id?: true
+    taskId?: true
+    changedBy?: true
+    oldStatus?: true
+    newStatus?: true
+    changedAt?: true
+  }
+
+  export type TaskHistoryCountAggregateInputType = {
+    id?: true
+    taskId?: true
+    changedBy?: true
+    oldStatus?: true
+    newStatus?: true
+    changedAt?: true
+    _all?: true
+  }
+
+  export type TaskHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TaskHistory to aggregate.
+     */
+    where?: TaskHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TaskHistories to fetch.
+     */
+    orderBy?: TaskHistoryOrderByWithRelationInput | TaskHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TaskHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TaskHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TaskHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TaskHistories
+    **/
+    _count?: true | TaskHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TaskHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TaskHistoryMaxAggregateInputType
+  }
+
+  export type GetTaskHistoryAggregateType<T extends TaskHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateTaskHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTaskHistory[P]>
+      : GetScalarType<T[P], AggregateTaskHistory[P]>
+  }
+
+
+
+
+  export type TaskHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskHistoryWhereInput
+    orderBy?: TaskHistoryOrderByWithAggregationInput | TaskHistoryOrderByWithAggregationInput[]
+    by: TaskHistoryScalarFieldEnum[] | TaskHistoryScalarFieldEnum
+    having?: TaskHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TaskHistoryCountAggregateInputType | true
+    _min?: TaskHistoryMinAggregateInputType
+    _max?: TaskHistoryMaxAggregateInputType
+  }
+
+  export type TaskHistoryGroupByOutputType = {
+    id: string
+    taskId: string
+    changedBy: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt: Date
+    _count: TaskHistoryCountAggregateOutputType | null
+    _min: TaskHistoryMinAggregateOutputType | null
+    _max: TaskHistoryMaxAggregateOutputType | null
+  }
+
+  type GetTaskHistoryGroupByPayload<T extends TaskHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TaskHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TaskHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TaskHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], TaskHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TaskHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    changedBy?: boolean
+    oldStatus?: boolean
+    newStatus?: boolean
+    changedAt?: boolean
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["taskHistory"]>
+
+  export type TaskHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    changedBy?: boolean
+    oldStatus?: boolean
+    newStatus?: boolean
+    changedAt?: boolean
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["taskHistory"]>
+
+  export type TaskHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    changedBy?: boolean
+    oldStatus?: boolean
+    newStatus?: boolean
+    changedAt?: boolean
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["taskHistory"]>
+
+  export type TaskHistorySelectScalar = {
+    id?: boolean
+    taskId?: boolean
+    changedBy?: boolean
+    oldStatus?: boolean
+    newStatus?: boolean
+    changedAt?: boolean
+  }
+
+  export type TaskHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "taskId" | "changedBy" | "oldStatus" | "newStatus" | "changedAt", ExtArgs["result"]["taskHistory"]>
+  export type TaskHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TaskHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type TaskHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task?: boolean | TaskDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $TaskHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TaskHistory"
+    objects: {
+      task: Prisma.$TaskPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      taskId: string
+      changedBy: string
+      oldStatus: $Enums.TaskStatus
+      newStatus: $Enums.TaskStatus
+      changedAt: Date
+    }, ExtArgs["result"]["taskHistory"]>
+    composites: {}
+  }
+
+  type TaskHistoryGetPayload<S extends boolean | null | undefined | TaskHistoryDefaultArgs> = $Result.GetResult<Prisma.$TaskHistoryPayload, S>
+
+  type TaskHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TaskHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TaskHistoryCountAggregateInputType | true
+    }
+
+  export interface TaskHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TaskHistory'], meta: { name: 'TaskHistory' } }
+    /**
+     * Find zero or one TaskHistory that matches the filter.
+     * @param {TaskHistoryFindUniqueArgs} args - Arguments to find a TaskHistory
+     * @example
+     * // Get one TaskHistory
+     * const taskHistory = await prisma.taskHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TaskHistoryFindUniqueArgs>(args: SelectSubset<T, TaskHistoryFindUniqueArgs<ExtArgs>>): Prisma__TaskHistoryClient<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TaskHistory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TaskHistoryFindUniqueOrThrowArgs} args - Arguments to find a TaskHistory
+     * @example
+     * // Get one TaskHistory
+     * const taskHistory = await prisma.taskHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TaskHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, TaskHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TaskHistoryClient<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TaskHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskHistoryFindFirstArgs} args - Arguments to find a TaskHistory
+     * @example
+     * // Get one TaskHistory
+     * const taskHistory = await prisma.taskHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TaskHistoryFindFirstArgs>(args?: SelectSubset<T, TaskHistoryFindFirstArgs<ExtArgs>>): Prisma__TaskHistoryClient<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TaskHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskHistoryFindFirstOrThrowArgs} args - Arguments to find a TaskHistory
+     * @example
+     * // Get one TaskHistory
+     * const taskHistory = await prisma.taskHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TaskHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, TaskHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__TaskHistoryClient<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TaskHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TaskHistories
+     * const taskHistories = await prisma.taskHistory.findMany()
+     * 
+     * // Get first 10 TaskHistories
+     * const taskHistories = await prisma.taskHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const taskHistoryWithIdOnly = await prisma.taskHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TaskHistoryFindManyArgs>(args?: SelectSubset<T, TaskHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TaskHistory.
+     * @param {TaskHistoryCreateArgs} args - Arguments to create a TaskHistory.
+     * @example
+     * // Create one TaskHistory
+     * const TaskHistory = await prisma.taskHistory.create({
+     *   data: {
+     *     // ... data to create a TaskHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends TaskHistoryCreateArgs>(args: SelectSubset<T, TaskHistoryCreateArgs<ExtArgs>>): Prisma__TaskHistoryClient<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TaskHistories.
+     * @param {TaskHistoryCreateManyArgs} args - Arguments to create many TaskHistories.
+     * @example
+     * // Create many TaskHistories
+     * const taskHistory = await prisma.taskHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TaskHistoryCreateManyArgs>(args?: SelectSubset<T, TaskHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TaskHistories and returns the data saved in the database.
+     * @param {TaskHistoryCreateManyAndReturnArgs} args - Arguments to create many TaskHistories.
+     * @example
+     * // Create many TaskHistories
+     * const taskHistory = await prisma.taskHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TaskHistories and only return the `id`
+     * const taskHistoryWithIdOnly = await prisma.taskHistory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TaskHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, TaskHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TaskHistory.
+     * @param {TaskHistoryDeleteArgs} args - Arguments to delete one TaskHistory.
+     * @example
+     * // Delete one TaskHistory
+     * const TaskHistory = await prisma.taskHistory.delete({
+     *   where: {
+     *     // ... filter to delete one TaskHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TaskHistoryDeleteArgs>(args: SelectSubset<T, TaskHistoryDeleteArgs<ExtArgs>>): Prisma__TaskHistoryClient<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TaskHistory.
+     * @param {TaskHistoryUpdateArgs} args - Arguments to update one TaskHistory.
+     * @example
+     * // Update one TaskHistory
+     * const taskHistory = await prisma.taskHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TaskHistoryUpdateArgs>(args: SelectSubset<T, TaskHistoryUpdateArgs<ExtArgs>>): Prisma__TaskHistoryClient<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TaskHistories.
+     * @param {TaskHistoryDeleteManyArgs} args - Arguments to filter TaskHistories to delete.
+     * @example
+     * // Delete a few TaskHistories
+     * const { count } = await prisma.taskHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TaskHistoryDeleteManyArgs>(args?: SelectSubset<T, TaskHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TaskHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TaskHistories
+     * const taskHistory = await prisma.taskHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TaskHistoryUpdateManyArgs>(args: SelectSubset<T, TaskHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TaskHistories and returns the data updated in the database.
+     * @param {TaskHistoryUpdateManyAndReturnArgs} args - Arguments to update many TaskHistories.
+     * @example
+     * // Update many TaskHistories
+     * const taskHistory = await prisma.taskHistory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TaskHistories and only return the `id`
+     * const taskHistoryWithIdOnly = await prisma.taskHistory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TaskHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, TaskHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TaskHistory.
+     * @param {TaskHistoryUpsertArgs} args - Arguments to update or create a TaskHistory.
+     * @example
+     * // Update or create a TaskHistory
+     * const taskHistory = await prisma.taskHistory.upsert({
+     *   create: {
+     *     // ... data to create a TaskHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TaskHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TaskHistoryUpsertArgs>(args: SelectSubset<T, TaskHistoryUpsertArgs<ExtArgs>>): Prisma__TaskHistoryClient<$Result.GetResult<Prisma.$TaskHistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TaskHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskHistoryCountArgs} args - Arguments to filter TaskHistories to count.
+     * @example
+     * // Count the number of TaskHistories
+     * const count = await prisma.taskHistory.count({
+     *   where: {
+     *     // ... the filter for the TaskHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends TaskHistoryCountArgs>(
+      args?: Subset<T, TaskHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TaskHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TaskHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TaskHistoryAggregateArgs>(args: Subset<T, TaskHistoryAggregateArgs>): Prisma.PrismaPromise<GetTaskHistoryAggregateType<T>>
+
+    /**
+     * Group by TaskHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TaskHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TaskHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TaskHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: TaskHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TaskHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTaskHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TaskHistory model
+   */
+  readonly fields: TaskHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TaskHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TaskHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    task<T extends TaskDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TaskDefaultArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TaskHistory model
+   */
+  interface TaskHistoryFieldRefs {
+    readonly id: FieldRef<"TaskHistory", 'String'>
+    readonly taskId: FieldRef<"TaskHistory", 'String'>
+    readonly changedBy: FieldRef<"TaskHistory", 'String'>
+    readonly oldStatus: FieldRef<"TaskHistory", 'TaskStatus'>
+    readonly newStatus: FieldRef<"TaskHistory", 'TaskStatus'>
+    readonly changedAt: FieldRef<"TaskHistory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TaskHistory findUnique
+   */
+  export type TaskHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskHistory to fetch.
+     */
+    where: TaskHistoryWhereUniqueInput
+  }
+
+  /**
+   * TaskHistory findUniqueOrThrow
+   */
+  export type TaskHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskHistory to fetch.
+     */
+    where: TaskHistoryWhereUniqueInput
+  }
+
+  /**
+   * TaskHistory findFirst
+   */
+  export type TaskHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskHistory to fetch.
+     */
+    where?: TaskHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TaskHistories to fetch.
+     */
+    orderBy?: TaskHistoryOrderByWithRelationInput | TaskHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TaskHistories.
+     */
+    cursor?: TaskHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TaskHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TaskHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TaskHistories.
+     */
+    distinct?: TaskHistoryScalarFieldEnum | TaskHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * TaskHistory findFirstOrThrow
+   */
+  export type TaskHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskHistory to fetch.
+     */
+    where?: TaskHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TaskHistories to fetch.
+     */
+    orderBy?: TaskHistoryOrderByWithRelationInput | TaskHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TaskHistories.
+     */
+    cursor?: TaskHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TaskHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TaskHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TaskHistories.
+     */
+    distinct?: TaskHistoryScalarFieldEnum | TaskHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * TaskHistory findMany
+   */
+  export type TaskHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which TaskHistories to fetch.
+     */
+    where?: TaskHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TaskHistories to fetch.
+     */
+    orderBy?: TaskHistoryOrderByWithRelationInput | TaskHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TaskHistories.
+     */
+    cursor?: TaskHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TaskHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TaskHistories.
+     */
+    skip?: number
+    distinct?: TaskHistoryScalarFieldEnum | TaskHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * TaskHistory create
+   */
+  export type TaskHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TaskHistory.
+     */
+    data: XOR<TaskHistoryCreateInput, TaskHistoryUncheckedCreateInput>
+  }
+
+  /**
+   * TaskHistory createMany
+   */
+  export type TaskHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TaskHistories.
+     */
+    data: TaskHistoryCreateManyInput | TaskHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TaskHistory createManyAndReturn
+   */
+  export type TaskHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many TaskHistories.
+     */
+    data: TaskHistoryCreateManyInput | TaskHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TaskHistory update
+   */
+  export type TaskHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TaskHistory.
+     */
+    data: XOR<TaskHistoryUpdateInput, TaskHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which TaskHistory to update.
+     */
+    where: TaskHistoryWhereUniqueInput
+  }
+
+  /**
+   * TaskHistory updateMany
+   */
+  export type TaskHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TaskHistories.
+     */
+    data: XOR<TaskHistoryUpdateManyMutationInput, TaskHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which TaskHistories to update
+     */
+    where?: TaskHistoryWhereInput
+    /**
+     * Limit how many TaskHistories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TaskHistory updateManyAndReturn
+   */
+  export type TaskHistoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to update TaskHistories.
+     */
+    data: XOR<TaskHistoryUpdateManyMutationInput, TaskHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which TaskHistories to update
+     */
+    where?: TaskHistoryWhereInput
+    /**
+     * Limit how many TaskHistories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TaskHistory upsert
+   */
+  export type TaskHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TaskHistory to update in case it exists.
+     */
+    where: TaskHistoryWhereUniqueInput
+    /**
+     * In case the TaskHistory found by the `where` argument doesn't exist, create a new TaskHistory with this data.
+     */
+    create: XOR<TaskHistoryCreateInput, TaskHistoryUncheckedCreateInput>
+    /**
+     * In case the TaskHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TaskHistoryUpdateInput, TaskHistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * TaskHistory delete
+   */
+  export type TaskHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which TaskHistory to delete.
+     */
+    where: TaskHistoryWhereUniqueInput
+  }
+
+  /**
+   * TaskHistory deleteMany
+   */
+  export type TaskHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TaskHistories to delete
+     */
+    where?: TaskHistoryWhereInput
+    /**
+     * Limit how many TaskHistories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TaskHistory without action
+   */
+  export type TaskHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TaskHistory
+     */
+    select?: TaskHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TaskHistory
+     */
+    omit?: TaskHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskHistoryInclude<ExtArgs> | null
   }
 
 
@@ -5732,6 +7000,18 @@ export namespace Prisma {
   };
 
   export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+  export const TaskHistoryScalarFieldEnum: {
+    id: 'id',
+    taskId: 'taskId',
+    changedBy: 'changedBy',
+    oldStatus: 'oldStatus',
+    newStatus: 'newStatus',
+    changedAt: 'changedAt'
+  };
+
+  export type TaskHistoryScalarFieldEnum = (typeof TaskHistoryScalarFieldEnum)[keyof typeof TaskHistoryScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -5863,6 +7143,7 @@ export namespace Prisma {
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     teamMembers?: TeamMemberListRelationFilter
     tasks?: TaskListRelationFilter
+    history?: TaskHistoryListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5875,6 +7156,7 @@ export namespace Prisma {
     updatedAt?: SortOrderInput | SortOrder
     teamMembers?: TeamMemberOrderByRelationAggregateInput
     tasks?: TaskOrderByRelationAggregateInput
+    history?: TaskHistoryOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5890,6 +7172,7 @@ export namespace Prisma {
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     teamMembers?: TeamMemberListRelationFilter
     tasks?: TaskListRelationFilter
+    history?: TaskHistoryListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -6049,6 +7332,7 @@ export namespace Prisma {
     updatedAt?: DateTimeNullableFilter<"Task"> | Date | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    history?: TaskHistoryListRelationFilter
   }
 
   export type TaskOrderByWithRelationInput = {
@@ -6063,6 +7347,7 @@ export namespace Prisma {
     updatedAt?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     team?: TeamOrderByWithRelationInput
+    history?: TaskHistoryOrderByRelationAggregateInput
   }
 
   export type TaskWhereUniqueInput = Prisma.AtLeast<{
@@ -6080,6 +7365,7 @@ export namespace Prisma {
     updatedAt?: DateTimeNullableFilter<"Task"> | Date | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    history?: TaskHistoryListRelationFilter
   }, "id">
 
   export type TaskOrderByWithAggregationInput = {
@@ -6112,6 +7398,69 @@ export namespace Prisma {
     updatedAt?: DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
   }
 
+  export type TaskHistoryWhereInput = {
+    AND?: TaskHistoryWhereInput | TaskHistoryWhereInput[]
+    OR?: TaskHistoryWhereInput[]
+    NOT?: TaskHistoryWhereInput | TaskHistoryWhereInput[]
+    id?: StringFilter<"TaskHistory"> | string
+    taskId?: StringFilter<"TaskHistory"> | string
+    changedBy?: StringFilter<"TaskHistory"> | string
+    oldStatus?: EnumTaskStatusFilter<"TaskHistory"> | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFilter<"TaskHistory"> | $Enums.TaskStatus
+    changedAt?: DateTimeFilter<"TaskHistory"> | Date | string
+    task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type TaskHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    changedBy?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    changedAt?: SortOrder
+    task?: TaskOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type TaskHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TaskHistoryWhereInput | TaskHistoryWhereInput[]
+    OR?: TaskHistoryWhereInput[]
+    NOT?: TaskHistoryWhereInput | TaskHistoryWhereInput[]
+    taskId?: StringFilter<"TaskHistory"> | string
+    changedBy?: StringFilter<"TaskHistory"> | string
+    oldStatus?: EnumTaskStatusFilter<"TaskHistory"> | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFilter<"TaskHistory"> | $Enums.TaskStatus
+    changedAt?: DateTimeFilter<"TaskHistory"> | Date | string
+    task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type TaskHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    changedBy?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    changedAt?: SortOrder
+    _count?: TaskHistoryCountOrderByAggregateInput
+    _max?: TaskHistoryMaxOrderByAggregateInput
+    _min?: TaskHistoryMinOrderByAggregateInput
+  }
+
+  export type TaskHistoryScalarWhereWithAggregatesInput = {
+    AND?: TaskHistoryScalarWhereWithAggregatesInput | TaskHistoryScalarWhereWithAggregatesInput[]
+    OR?: TaskHistoryScalarWhereWithAggregatesInput[]
+    NOT?: TaskHistoryScalarWhereWithAggregatesInput | TaskHistoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TaskHistory"> | string
+    taskId?: StringWithAggregatesFilter<"TaskHistory"> | string
+    changedBy?: StringWithAggregatesFilter<"TaskHistory"> | string
+    oldStatus?: EnumTaskStatusWithAggregatesFilter<"TaskHistory"> | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusWithAggregatesFilter<"TaskHistory"> | $Enums.TaskStatus
+    changedAt?: DateTimeWithAggregatesFilter<"TaskHistory"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
@@ -6122,6 +7471,7 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     teamMembers?: TeamMemberCreateNestedManyWithoutUserInput
     tasks?: TaskCreateNestedManyWithoutUserInput
+    history?: TaskHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6134,6 +7484,7 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     teamMembers?: TeamMemberUncheckedCreateNestedManyWithoutUserInput
     tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
+    history?: TaskHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -6146,6 +7497,7 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     teamMembers?: TeamMemberUpdateManyWithoutUserNestedInput
     tasks?: TaskUpdateManyWithoutUserNestedInput
+    history?: TaskHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6158,6 +7510,7 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     teamMembers?: TeamMemberUncheckedUpdateManyWithoutUserNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
+    history?: TaskHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6318,6 +7671,7 @@ export namespace Prisma {
     updatedAt?: Date | string | null
     user: UserCreateNestedOneWithoutTasksInput
     team: TeamCreateNestedOneWithoutTasksInput
+    history?: TaskHistoryCreateNestedManyWithoutTaskInput
   }
 
   export type TaskUncheckedCreateInput = {
@@ -6330,6 +7684,7 @@ export namespace Prisma {
     teamId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    history?: TaskHistoryUncheckedCreateNestedManyWithoutTaskInput
   }
 
   export type TaskUpdateInput = {
@@ -6342,6 +7697,7 @@ export namespace Prisma {
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutTasksNestedInput
     team?: TeamUpdateOneRequiredWithoutTasksNestedInput
+    history?: TaskHistoryUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateInput = {
@@ -6354,6 +7710,7 @@ export namespace Prisma {
     teamId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    history?: TaskHistoryUncheckedUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskCreateManyInput = {
@@ -6388,6 +7745,67 @@ export namespace Prisma {
     teamId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TaskHistoryCreateInput = {
+    id?: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt?: Date | string
+    task: TaskCreateNestedOneWithoutHistoryInput
+    user: UserCreateNestedOneWithoutHistoryInput
+  }
+
+  export type TaskHistoryUncheckedCreateInput = {
+    id?: string
+    taskId: string
+    changedBy: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt?: Date | string
+  }
+
+  export type TaskHistoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    task?: TaskUpdateOneRequiredWithoutHistoryNestedInput
+    user?: UserUpdateOneRequiredWithoutHistoryNestedInput
+  }
+
+  export type TaskHistoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    changedBy?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskHistoryCreateManyInput = {
+    id?: string
+    taskId: string
+    changedBy: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt?: Date | string
+  }
+
+  export type TaskHistoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskHistoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    changedBy?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -6446,6 +7864,12 @@ export namespace Prisma {
     none?: TaskWhereInput
   }
 
+  export type TaskHistoryListRelationFilter = {
+    every?: TaskHistoryWhereInput
+    some?: TaskHistoryWhereInput
+    none?: TaskHistoryWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -6456,6 +7880,10 @@ export namespace Prisma {
   }
 
   export type TaskOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TaskHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -6673,6 +8101,38 @@ export namespace Prisma {
     _max?: NestedEnumTaskPriorityFilter<$PrismaModel>
   }
 
+  export type TaskScalarRelationFilter = {
+    is?: TaskWhereInput
+    isNot?: TaskWhereInput
+  }
+
+  export type TaskHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    changedBy?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    changedAt?: SortOrder
+  }
+
+  export type TaskHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    changedBy?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    changedAt?: SortOrder
+  }
+
+  export type TaskHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    changedBy?: SortOrder
+    oldStatus?: SortOrder
+    newStatus?: SortOrder
+    changedAt?: SortOrder
+  }
+
   export type TeamMemberCreateNestedManyWithoutUserInput = {
     create?: XOR<TeamMemberCreateWithoutUserInput, TeamMemberUncheckedCreateWithoutUserInput> | TeamMemberCreateWithoutUserInput[] | TeamMemberUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TeamMemberCreateOrConnectWithoutUserInput | TeamMemberCreateOrConnectWithoutUserInput[]
@@ -6687,6 +8147,13 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
+  export type TaskHistoryCreateNestedManyWithoutUserInput = {
+    create?: XOR<TaskHistoryCreateWithoutUserInput, TaskHistoryUncheckedCreateWithoutUserInput> | TaskHistoryCreateWithoutUserInput[] | TaskHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TaskHistoryCreateOrConnectWithoutUserInput | TaskHistoryCreateOrConnectWithoutUserInput[]
+    createMany?: TaskHistoryCreateManyUserInputEnvelope
+    connect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+  }
+
   export type TeamMemberUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<TeamMemberCreateWithoutUserInput, TeamMemberUncheckedCreateWithoutUserInput> | TeamMemberCreateWithoutUserInput[] | TeamMemberUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TeamMemberCreateOrConnectWithoutUserInput | TeamMemberCreateOrConnectWithoutUserInput[]
@@ -6699,6 +8166,13 @@ export namespace Prisma {
     connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
     createMany?: TaskCreateManyUserInputEnvelope
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type TaskHistoryUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<TaskHistoryCreateWithoutUserInput, TaskHistoryUncheckedCreateWithoutUserInput> | TaskHistoryCreateWithoutUserInput[] | TaskHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TaskHistoryCreateOrConnectWithoutUserInput | TaskHistoryCreateOrConnectWithoutUserInput[]
+    createMany?: TaskHistoryCreateManyUserInputEnvelope
+    connect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6745,6 +8219,20 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
+  export type TaskHistoryUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TaskHistoryCreateWithoutUserInput, TaskHistoryUncheckedCreateWithoutUserInput> | TaskHistoryCreateWithoutUserInput[] | TaskHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TaskHistoryCreateOrConnectWithoutUserInput | TaskHistoryCreateOrConnectWithoutUserInput[]
+    upsert?: TaskHistoryUpsertWithWhereUniqueWithoutUserInput | TaskHistoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TaskHistoryCreateManyUserInputEnvelope
+    set?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    disconnect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    delete?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    connect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    update?: TaskHistoryUpdateWithWhereUniqueWithoutUserInput | TaskHistoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TaskHistoryUpdateManyWithWhereWithoutUserInput | TaskHistoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TaskHistoryScalarWhereInput | TaskHistoryScalarWhereInput[]
+  }
+
   export type TeamMemberUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<TeamMemberCreateWithoutUserInput, TeamMemberUncheckedCreateWithoutUserInput> | TeamMemberCreateWithoutUserInput[] | TeamMemberUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TeamMemberCreateOrConnectWithoutUserInput | TeamMemberCreateOrConnectWithoutUserInput[]
@@ -6771,6 +8259,20 @@ export namespace Prisma {
     update?: TaskUpdateWithWhereUniqueWithoutUserInput | TaskUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TaskUpdateManyWithWhereWithoutUserInput | TaskUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type TaskHistoryUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<TaskHistoryCreateWithoutUserInput, TaskHistoryUncheckedCreateWithoutUserInput> | TaskHistoryCreateWithoutUserInput[] | TaskHistoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: TaskHistoryCreateOrConnectWithoutUserInput | TaskHistoryCreateOrConnectWithoutUserInput[]
+    upsert?: TaskHistoryUpsertWithWhereUniqueWithoutUserInput | TaskHistoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: TaskHistoryCreateManyUserInputEnvelope
+    set?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    disconnect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    delete?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    connect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    update?: TaskHistoryUpdateWithWhereUniqueWithoutUserInput | TaskHistoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: TaskHistoryUpdateManyWithWhereWithoutUserInput | TaskHistoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: TaskHistoryScalarWhereInput | TaskHistoryScalarWhereInput[]
   }
 
   export type TeamMemberCreateNestedManyWithoutTeamInput = {
@@ -6897,6 +8399,20 @@ export namespace Prisma {
     connect?: TeamWhereUniqueInput
   }
 
+  export type TaskHistoryCreateNestedManyWithoutTaskInput = {
+    create?: XOR<TaskHistoryCreateWithoutTaskInput, TaskHistoryUncheckedCreateWithoutTaskInput> | TaskHistoryCreateWithoutTaskInput[] | TaskHistoryUncheckedCreateWithoutTaskInput[]
+    connectOrCreate?: TaskHistoryCreateOrConnectWithoutTaskInput | TaskHistoryCreateOrConnectWithoutTaskInput[]
+    createMany?: TaskHistoryCreateManyTaskInputEnvelope
+    connect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+  }
+
+  export type TaskHistoryUncheckedCreateNestedManyWithoutTaskInput = {
+    create?: XOR<TaskHistoryCreateWithoutTaskInput, TaskHistoryUncheckedCreateWithoutTaskInput> | TaskHistoryCreateWithoutTaskInput[] | TaskHistoryUncheckedCreateWithoutTaskInput[]
+    connectOrCreate?: TaskHistoryCreateOrConnectWithoutTaskInput | TaskHistoryCreateOrConnectWithoutTaskInput[]
+    createMany?: TaskHistoryCreateManyTaskInputEnvelope
+    connect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+  }
+
   export type EnumTaskStatusFieldUpdateOperationsInput = {
     set?: $Enums.TaskStatus
   }
@@ -6919,6 +8435,62 @@ export namespace Prisma {
     upsert?: TeamUpsertWithoutTasksInput
     connect?: TeamWhereUniqueInput
     update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutTasksInput, TeamUpdateWithoutTasksInput>, TeamUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type TaskHistoryUpdateManyWithoutTaskNestedInput = {
+    create?: XOR<TaskHistoryCreateWithoutTaskInput, TaskHistoryUncheckedCreateWithoutTaskInput> | TaskHistoryCreateWithoutTaskInput[] | TaskHistoryUncheckedCreateWithoutTaskInput[]
+    connectOrCreate?: TaskHistoryCreateOrConnectWithoutTaskInput | TaskHistoryCreateOrConnectWithoutTaskInput[]
+    upsert?: TaskHistoryUpsertWithWhereUniqueWithoutTaskInput | TaskHistoryUpsertWithWhereUniqueWithoutTaskInput[]
+    createMany?: TaskHistoryCreateManyTaskInputEnvelope
+    set?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    disconnect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    delete?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    connect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    update?: TaskHistoryUpdateWithWhereUniqueWithoutTaskInput | TaskHistoryUpdateWithWhereUniqueWithoutTaskInput[]
+    updateMany?: TaskHistoryUpdateManyWithWhereWithoutTaskInput | TaskHistoryUpdateManyWithWhereWithoutTaskInput[]
+    deleteMany?: TaskHistoryScalarWhereInput | TaskHistoryScalarWhereInput[]
+  }
+
+  export type TaskHistoryUncheckedUpdateManyWithoutTaskNestedInput = {
+    create?: XOR<TaskHistoryCreateWithoutTaskInput, TaskHistoryUncheckedCreateWithoutTaskInput> | TaskHistoryCreateWithoutTaskInput[] | TaskHistoryUncheckedCreateWithoutTaskInput[]
+    connectOrCreate?: TaskHistoryCreateOrConnectWithoutTaskInput | TaskHistoryCreateOrConnectWithoutTaskInput[]
+    upsert?: TaskHistoryUpsertWithWhereUniqueWithoutTaskInput | TaskHistoryUpsertWithWhereUniqueWithoutTaskInput[]
+    createMany?: TaskHistoryCreateManyTaskInputEnvelope
+    set?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    disconnect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    delete?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    connect?: TaskHistoryWhereUniqueInput | TaskHistoryWhereUniqueInput[]
+    update?: TaskHistoryUpdateWithWhereUniqueWithoutTaskInput | TaskHistoryUpdateWithWhereUniqueWithoutTaskInput[]
+    updateMany?: TaskHistoryUpdateManyWithWhereWithoutTaskInput | TaskHistoryUpdateManyWithWhereWithoutTaskInput[]
+    deleteMany?: TaskHistoryScalarWhereInput | TaskHistoryScalarWhereInput[]
+  }
+
+  export type TaskCreateNestedOneWithoutHistoryInput = {
+    create?: XOR<TaskCreateWithoutHistoryInput, TaskUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: TaskCreateOrConnectWithoutHistoryInput
+    connect?: TaskWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutHistoryInput = {
+    create?: XOR<UserCreateWithoutHistoryInput, UserUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHistoryInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TaskUpdateOneRequiredWithoutHistoryNestedInput = {
+    create?: XOR<TaskCreateWithoutHistoryInput, TaskUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: TaskCreateOrConnectWithoutHistoryInput
+    upsert?: TaskUpsertWithoutHistoryInput
+    connect?: TaskWhereUniqueInput
+    update?: XOR<XOR<TaskUpdateToOneWithWhereWithoutHistoryInput, TaskUpdateWithoutHistoryInput>, TaskUncheckedUpdateWithoutHistoryInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutHistoryNestedInput = {
+    create?: XOR<UserCreateWithoutHistoryInput, UserUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutHistoryInput
+    upsert?: UserUpsertWithoutHistoryInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutHistoryInput, UserUpdateWithoutHistoryInput>, UserUncheckedUpdateWithoutHistoryInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7108,6 +8680,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     team: TeamCreateNestedOneWithoutTasksInput
+    history?: TaskHistoryCreateNestedManyWithoutTaskInput
   }
 
   export type TaskUncheckedCreateWithoutUserInput = {
@@ -7119,6 +8692,7 @@ export namespace Prisma {
     teamId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    history?: TaskHistoryUncheckedCreateNestedManyWithoutTaskInput
   }
 
   export type TaskCreateOrConnectWithoutUserInput = {
@@ -7128,6 +8702,32 @@ export namespace Prisma {
 
   export type TaskCreateManyUserInputEnvelope = {
     data: TaskCreateManyUserInput | TaskCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TaskHistoryCreateWithoutUserInput = {
+    id?: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt?: Date | string
+    task: TaskCreateNestedOneWithoutHistoryInput
+  }
+
+  export type TaskHistoryUncheckedCreateWithoutUserInput = {
+    id?: string
+    taskId: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt?: Date | string
+  }
+
+  export type TaskHistoryCreateOrConnectWithoutUserInput = {
+    where: TaskHistoryWhereUniqueInput
+    create: XOR<TaskHistoryCreateWithoutUserInput, TaskHistoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type TaskHistoryCreateManyUserInputEnvelope = {
+    data: TaskHistoryCreateManyUserInput | TaskHistoryCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -7189,6 +8789,34 @@ export namespace Prisma {
     updatedAt?: DateTimeNullableFilter<"Task"> | Date | string | null
   }
 
+  export type TaskHistoryUpsertWithWhereUniqueWithoutUserInput = {
+    where: TaskHistoryWhereUniqueInput
+    update: XOR<TaskHistoryUpdateWithoutUserInput, TaskHistoryUncheckedUpdateWithoutUserInput>
+    create: XOR<TaskHistoryCreateWithoutUserInput, TaskHistoryUncheckedCreateWithoutUserInput>
+  }
+
+  export type TaskHistoryUpdateWithWhereUniqueWithoutUserInput = {
+    where: TaskHistoryWhereUniqueInput
+    data: XOR<TaskHistoryUpdateWithoutUserInput, TaskHistoryUncheckedUpdateWithoutUserInput>
+  }
+
+  export type TaskHistoryUpdateManyWithWhereWithoutUserInput = {
+    where: TaskHistoryScalarWhereInput
+    data: XOR<TaskHistoryUpdateManyMutationInput, TaskHistoryUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type TaskHistoryScalarWhereInput = {
+    AND?: TaskHistoryScalarWhereInput | TaskHistoryScalarWhereInput[]
+    OR?: TaskHistoryScalarWhereInput[]
+    NOT?: TaskHistoryScalarWhereInput | TaskHistoryScalarWhereInput[]
+    id?: StringFilter<"TaskHistory"> | string
+    taskId?: StringFilter<"TaskHistory"> | string
+    changedBy?: StringFilter<"TaskHistory"> | string
+    oldStatus?: EnumTaskStatusFilter<"TaskHistory"> | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFilter<"TaskHistory"> | $Enums.TaskStatus
+    changedAt?: DateTimeFilter<"TaskHistory"> | Date | string
+  }
+
   export type TeamMemberCreateWithoutTeamInput = {
     id?: string
     createdAt?: Date | string
@@ -7222,6 +8850,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     user: UserCreateNestedOneWithoutTasksInput
+    history?: TaskHistoryCreateNestedManyWithoutTaskInput
   }
 
   export type TaskUncheckedCreateWithoutTeamInput = {
@@ -7233,6 +8862,7 @@ export namespace Prisma {
     assignedTo: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+    history?: TaskHistoryUncheckedCreateNestedManyWithoutTaskInput
   }
 
   export type TaskCreateOrConnectWithoutTeamInput = {
@@ -7286,6 +8916,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     tasks?: TaskCreateNestedManyWithoutUserInput
+    history?: TaskHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTeamMembersInput = {
@@ -7297,6 +8928,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
+    history?: TaskHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTeamMembersInput = {
@@ -7347,6 +8979,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tasks?: TaskUpdateManyWithoutUserNestedInput
+    history?: TaskHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTeamMembersInput = {
@@ -7358,6 +8991,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
+    history?: TaskHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TeamUpsertWithoutTeamMembersInput = {
@@ -7398,6 +9032,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     teamMembers?: TeamMemberCreateNestedManyWithoutUserInput
+    history?: TaskHistoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTasksInput = {
@@ -7409,6 +9044,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string | null
     teamMembers?: TeamMemberUncheckedCreateNestedManyWithoutUserInput
+    history?: TaskHistoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTasksInput = {
@@ -7439,6 +9075,32 @@ export namespace Prisma {
     create: XOR<TeamCreateWithoutTasksInput, TeamUncheckedCreateWithoutTasksInput>
   }
 
+  export type TaskHistoryCreateWithoutTaskInput = {
+    id?: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt?: Date | string
+    user: UserCreateNestedOneWithoutHistoryInput
+  }
+
+  export type TaskHistoryUncheckedCreateWithoutTaskInput = {
+    id?: string
+    changedBy: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt?: Date | string
+  }
+
+  export type TaskHistoryCreateOrConnectWithoutTaskInput = {
+    where: TaskHistoryWhereUniqueInput
+    create: XOR<TaskHistoryCreateWithoutTaskInput, TaskHistoryUncheckedCreateWithoutTaskInput>
+  }
+
+  export type TaskHistoryCreateManyTaskInputEnvelope = {
+    data: TaskHistoryCreateManyTaskInput | TaskHistoryCreateManyTaskInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutTasksInput = {
     update: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
     create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
@@ -7459,6 +9121,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     teamMembers?: TeamMemberUpdateManyWithoutUserNestedInput
+    history?: TaskHistoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTasksInput = {
@@ -7470,6 +9133,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     teamMembers?: TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+    history?: TaskHistoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TeamUpsertWithoutTasksInput = {
@@ -7501,6 +9165,150 @@ export namespace Prisma {
     teamMembers?: TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
   }
 
+  export type TaskHistoryUpsertWithWhereUniqueWithoutTaskInput = {
+    where: TaskHistoryWhereUniqueInput
+    update: XOR<TaskHistoryUpdateWithoutTaskInput, TaskHistoryUncheckedUpdateWithoutTaskInput>
+    create: XOR<TaskHistoryCreateWithoutTaskInput, TaskHistoryUncheckedCreateWithoutTaskInput>
+  }
+
+  export type TaskHistoryUpdateWithWhereUniqueWithoutTaskInput = {
+    where: TaskHistoryWhereUniqueInput
+    data: XOR<TaskHistoryUpdateWithoutTaskInput, TaskHistoryUncheckedUpdateWithoutTaskInput>
+  }
+
+  export type TaskHistoryUpdateManyWithWhereWithoutTaskInput = {
+    where: TaskHistoryScalarWhereInput
+    data: XOR<TaskHistoryUpdateManyMutationInput, TaskHistoryUncheckedUpdateManyWithoutTaskInput>
+  }
+
+  export type TaskCreateWithoutHistoryInput = {
+    id?: string
+    title: string
+    description: string
+    status?: $Enums.TaskStatus
+    priority: $Enums.TaskPriority
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    user: UserCreateNestedOneWithoutTasksInput
+    team: TeamCreateNestedOneWithoutTasksInput
+  }
+
+  export type TaskUncheckedCreateWithoutHistoryInput = {
+    id?: string
+    title: string
+    description: string
+    status?: $Enums.TaskStatus
+    priority: $Enums.TaskPriority
+    assignedTo: string
+    teamId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+  }
+
+  export type TaskCreateOrConnectWithoutHistoryInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutHistoryInput, TaskUncheckedCreateWithoutHistoryInput>
+  }
+
+  export type UserCreateWithoutHistoryInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    teamMembers?: TeamMemberCreateNestedManyWithoutUserInput
+    tasks?: TaskCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutHistoryInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: $Enums.UserRole
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+    teamMembers?: TeamMemberUncheckedCreateNestedManyWithoutUserInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutHistoryInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutHistoryInput, UserUncheckedCreateWithoutHistoryInput>
+  }
+
+  export type TaskUpsertWithoutHistoryInput = {
+    update: XOR<TaskUpdateWithoutHistoryInput, TaskUncheckedUpdateWithoutHistoryInput>
+    create: XOR<TaskCreateWithoutHistoryInput, TaskUncheckedCreateWithoutHistoryInput>
+    where?: TaskWhereInput
+  }
+
+  export type TaskUpdateToOneWithWhereWithoutHistoryInput = {
+    where?: TaskWhereInput
+    data: XOR<TaskUpdateWithoutHistoryInput, TaskUncheckedUpdateWithoutHistoryInput>
+  }
+
+  export type TaskUpdateWithoutHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: UserUpdateOneRequiredWithoutTasksNestedInput
+    team?: TeamUpdateOneRequiredWithoutTasksNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    priority?: EnumTaskPriorityFieldUpdateOperationsInput | $Enums.TaskPriority
+    assignedTo?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type UserUpsertWithoutHistoryInput = {
+    update: XOR<UserUpdateWithoutHistoryInput, UserUncheckedUpdateWithoutHistoryInput>
+    create: XOR<UserCreateWithoutHistoryInput, UserUncheckedCreateWithoutHistoryInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutHistoryInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutHistoryInput, UserUncheckedUpdateWithoutHistoryInput>
+  }
+
+  export type UserUpdateWithoutHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamMembers?: TeamMemberUpdateManyWithoutUserNestedInput
+    tasks?: TaskUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamMembers?: TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type TeamMemberCreateManyUserInput = {
     id?: string
     teamId: string
@@ -7517,6 +9325,14 @@ export namespace Prisma {
     teamId: string
     createdAt?: Date | string
     updatedAt?: Date | string | null
+  }
+
+  export type TaskHistoryCreateManyUserInput = {
+    id?: string
+    taskId: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt?: Date | string
   }
 
   export type TeamMemberUpdateWithoutUserInput = {
@@ -7549,6 +9365,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     team?: TeamUpdateOneRequiredWithoutTasksNestedInput
+    history?: TaskHistoryUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutUserInput = {
@@ -7560,6 +9377,7 @@ export namespace Prisma {
     teamId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    history?: TaskHistoryUncheckedUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateManyWithoutUserInput = {
@@ -7571,6 +9389,30 @@ export namespace Prisma {
     teamId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TaskHistoryUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    task?: TaskUpdateOneRequiredWithoutHistoryNestedInput
+  }
+
+  export type TaskHistoryUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskHistoryUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TeamMemberCreateManyTeamInput = {
@@ -7621,6 +9463,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneRequiredWithoutTasksNestedInput
+    history?: TaskHistoryUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutTeamInput = {
@@ -7632,6 +9475,7 @@ export namespace Prisma {
     assignedTo?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    history?: TaskHistoryUncheckedUpdateManyWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateManyWithoutTeamInput = {
@@ -7643,6 +9487,38 @@ export namespace Prisma {
     assignedTo?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TaskHistoryCreateManyTaskInput = {
+    id?: string
+    changedBy: string
+    oldStatus: $Enums.TaskStatus
+    newStatus: $Enums.TaskStatus
+    changedAt?: Date | string
+  }
+
+  export type TaskHistoryUpdateWithoutTaskInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutHistoryNestedInput
+  }
+
+  export type TaskHistoryUncheckedUpdateWithoutTaskInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    changedBy?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TaskHistoryUncheckedUpdateManyWithoutTaskInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    changedBy?: StringFieldUpdateOperationsInput | string
+    oldStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    newStatus?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
+    changedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
