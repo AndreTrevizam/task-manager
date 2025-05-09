@@ -8,9 +8,28 @@ const tasksRoutes = Router()
 const tasksController = new TasksController()
 const tasksStatusController = new TasksStatusController()
 
-tasksRoutes.use(ensureAuthenticated, verifyUserAuthorization(['admin']))
-tasksRoutes.post("/", tasksController.create)
-tasksRoutes.patch("/:id", tasksStatusController.update)
-tasksRoutes.get("/", tasksController.index)
+tasksRoutes.post("/",
+  ensureAuthenticated,
+  verifyUserAuthorization(['admin']),
+  tasksController.create
+)
+
+tasksRoutes.patch("/:id/status", 
+  ensureAuthenticated,
+  verifyUserAuthorization(['member', 'admin']),
+  tasksStatusController.update
+)
+
+tasksRoutes.get("/", 
+  ensureAuthenticated,
+  verifyUserAuthorization(['admin']),
+  tasksController.index
+)
+
+tasksRoutes.get("/:team_id/tasks",
+  ensureAuthenticated,
+  verifyUserAuthorization(['member', 'admin']),
+  tasksController.showTeamTasks
+)
 
 export { tasksRoutes }
